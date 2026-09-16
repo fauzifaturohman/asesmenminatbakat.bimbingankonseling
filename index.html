@@ -58,6 +58,45 @@
   }
   .feature-list .fi{font-size:19px;line-height:1.2}
 
+  /* ---------- FORM NAMA ---------- */
+  .form-block{margin-top:26px}
+  .form-label{
+    display:block;font-size:13px;font-weight:800;letter-spacing:.4px;
+    color:#334155;margin-bottom:9px;text-transform:uppercase;
+  }
+  .form-label .opt-tag{
+    font-size:10.5px;font-weight:700;color:#94a3b8;
+    text-transform:none;letter-spacing:0;margin-left:6px;
+  }
+  .input-wrap{position:relative}
+  .input-icon{
+    position:absolute;left:16px;top:50%;transform:translateY(-50%);
+    font-size:18px;opacity:.55;pointer-events:none;
+  }
+  .text-input{
+    width:100%;font-family:inherit;font-size:15.5px;font-weight:600;
+    color:var(--ink);padding:15px 16px 15px 48px;
+    border:2px solid var(--line);border-radius:16px;background:#fbfcff;
+    transition:all .18s ease;outline:none;
+  }
+  .text-input::placeholder{color:#a8b3c4;font-weight:500}
+  .text-input:focus{
+    border-color:var(--primary);background:#fff;
+    box-shadow:0 0 0 4px rgba(79,70,229,.12);
+  }
+  .text-input.error{
+    border-color:#ef4444;background:#fef2f2;
+    box-shadow:0 0 0 4px rgba(239,68,68,.12);
+  }
+  .field-hint{
+    font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.5;
+  }
+  .field-err{
+    font-size:12.5px;color:#dc2626;font-weight:700;margin-top:8px;
+    display:none;align-items:center;gap:6px;
+  }
+  .field-err.show{display:flex}
+
   .meta-row{
     display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;
   }
@@ -86,6 +125,23 @@
   .btn-row .btn{margin-top:0}
 
   /* ---------- QUIZ ---------- */
+  .student-badge{
+    display:none;align-items:center;gap:10px;
+    background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+    border:1px solid #e0e7ff;border-radius:14px;
+    padding:11px 15px;margin-bottom:20px;
+  }
+  .student-badge.show{display:flex}
+  .sb-avatar{
+    width:36px;height:36px;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:#fff;display:grid;place-items:center;
+    font-weight:800;font-size:15px;
+  }
+  .sb-info{line-height:1.3;overflow:hidden}
+  .sb-label{font-size:10.5px;font-weight:800;letter-spacing:1px;color:#818cf8;text-transform:uppercase}
+  .sb-name{font-size:14.5px;font-weight:800;color:#1e1b4b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
   .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--muted)}
   .progress-track{height:9px;background:#e9edf5;border-radius:99px;overflow:hidden;margin-bottom:26px}
   .progress-fill{
@@ -130,8 +186,23 @@
   .back-wrap{margin-top:22px}
 
   /* ---------- RESULT ---------- */
+  .print-header{display:none}
   .result-head{text-align:center;padding-bottom:22px;border-bottom:1px dashed var(--line);margin-bottom:24px}
   .result-head .eyebrow{font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--primary);text-transform:uppercase}
+  .result-student{
+    display:inline-flex;align-items:center;gap:11px;
+    background:#f8fafc;border:1px solid var(--line);border-radius:999px;
+    padding:8px 18px 8px 8px;margin:16px 0 4px;
+  }
+  .result-student .rs-avatar{
+    width:34px;height:34px;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;
+  }
+  .result-student .rs-text{text-align:left;line-height:1.25}
+  .result-student .rs-label{font-size:10px;font-weight:800;letter-spacing:1px;color:#94a3b8;text-transform:uppercase}
+  .result-student .rs-name{font-size:14.5px;font-weight:800;color:#1e1b4b}
+
   .holland-code{
     display:flex;justify-content:center;gap:10px;margin:16px 0 10px;
   }
@@ -194,14 +265,22 @@
     .opt{padding:11px 2px}
     .opt .num{width:29px;height:29px;font-size:13px}
     .opt .lbl{font-size:9px}
+    .result-student{width:100%;justify-content:flex-start}
   }
 
   @media print{
-    body{background:#fff;padding:0}
+    body{background:#fff;padding:0;display:block}
     .card{box-shadow:none;padding:0}
     .btn,.btn-row,.back-wrap{display:none !important}
     .screen{display:none}
     .screen.active{display:block}
+    .print-header{
+      display:block;text-align:center;border-bottom:2px solid #1e293b;
+      padding-bottom:14px;margin-bottom:20px;
+    }
+    .print-header h2{font-size:19px;letter-spacing:.5px}
+    .print-header p{font-size:12px;color:#475569;margin-top:4px}
+    .note{background:#fff}
   }
 </style>
 </head>
@@ -212,13 +291,31 @@
   <section id="screen-intro" class="screen active">
     <div class="card">
       <div class="hero-icon">🧭</div>
-      <h1>Asesmen Minat &amp; Bakat Murid</h1>
+      <h1>Asesmen Minat &amp; Bakat Siswa</h1>
       <p class="sub">
         Temukan kekuatan dirimu dan gambaran karier yang cocok untukmu.
         Asesmen ini menggunakan model <strong>RIASEC (Holland Codes)</strong> —
         standar internasional yang dipakai banyak sekolah dan perusahaan
         untuk memetakan minat dan potensi seseorang.
       </p>
+
+      <!-- ====== FORM IDENTITAS ====== -->
+      <div class="form-block">
+        <label class="form-label" for="studentName">Nama Lengkap Murid</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input
+            id="studentName"
+            class="text-input"
+            type="text"
+            placeholder="Contoh: Aditya Pratama"
+            maxlength="60"
+            autocomplete="name"
+          />
+        </div>
+        <p class="field-hint">Nama ini akan muncul di halaman hasil dan pada cetakan PDF.</p>
+        <p class="field-err" id="nameError">⚠️ Mohon isi nama lengkapmu terlebih dahulu sebelum memulai.</p>
+      </div>
 
       <ul class="feature-list">
         <li><span class="fi">📝</span><span><strong>36 pernyataan singkat.</strong> Tidak ada jawaban benar atau salah — jawab sejujurnya sesuai dirimu.</span></li>
@@ -240,6 +337,14 @@
   <!-- ============ QUIZ ============ -->
   <section id="screen-quiz" class="screen">
     <div class="card">
+      <div class="student-badge" id="studentBadge">
+        <div class="sb-avatar" id="sbAvatar">A</div>
+        <div class="sb-info">
+          <div class="sb-label">Peserta Asesmen</div>
+          <div class="sb-name" id="sbName">—</div>
+        </div>
+      </div>
+
       <div class="quiz-head">
         <span id="counter">Pertanyaan 1 dari 36</span>
         <span id="percent">0%</span>
@@ -386,7 +491,12 @@ const SCALE = [
 /* =========================================================
    STATE & NAVIGASI
    ========================================================= */
-const state = { index: 0, answers: new Array(TOTAL).fill(null), locked: false };
+const state = {
+  index: 0,
+  answers: new Array(TOTAL).fill(null),
+  locked: false,
+  studentName: ""
+};
 
 const el = id => document.getElementById(id);
 const screens = { intro: el("screen-intro"), quiz: el("screen-quiz"), result: el("screen-result") };
@@ -397,13 +507,66 @@ function showScreen(name) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+/* ---------- Ambil inisial dari nama ---------- */
+function getInitials(name){
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
+
+/* ---------- Escape HTML sederhana ---------- */
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+/* ---------- Validasi nama & mulai ---------- */
 function startQuiz() {
+  const input = el("studentName");
+  const err   = el("nameError");
+  const raw   = input.value.trim().replace(/\s+/g, " ");
+
+  if (raw.length < 2) {
+    input.classList.add("error");
+    err.classList.add("show");
+    input.focus();
+    return;
+  }
+
+  input.classList.remove("error");
+  err.classList.remove("show");
+
+  // simpan nama
+  state.studentName = raw;
+
+  // reset state kuis
   state.index = 0;
   state.answers = new Array(TOTAL).fill(null);
+  state.locked = false;
+
+  // tampilkan badge nama di kuis
+  el("sbName").textContent = state.studentName;
+  el("sbAvatar").textContent = getInitials(state.studentName);
+  el("studentBadge").classList.add("show");
+
   showScreen("quiz");
   renderQuestion();
 }
 
+/* ---------- Hapus error saat mengetik ---------- */
+el("studentName").addEventListener("input", function(){
+  if (this.value.trim().length >= 2) {
+    this.classList.remove("error");
+    el("nameError").classList.remove("show");
+  }
+});
+el("studentName").addEventListener("keydown", function(e){
+  if (e.key === "Enter") startQuiz();
+});
+
+/* ---------- Render soal ---------- */
 function renderQuestion() {
   const q = QUESTIONS[state.index];
   const answeredCount = state.index;
@@ -428,7 +591,6 @@ function renderQuestion() {
 
   el("backBtn").style.visibility = state.index === 0 ? "hidden" : "visible";
 
-  // animasi masuk
   const card = screens.quiz.querySelector(".card");
   card.style.animation = "none";
   void card.offsetWidth;
@@ -486,6 +648,12 @@ function showResult() {
   const code = top3.map(r => r.code).join("–");
   const main = TYPE_DATA[top3[0].code];
 
+  const safeName = escapeHTML(state.studentName);
+  const initial = getInitials(state.studentName);
+  const tanggal = new Date().toLocaleDateString("id-ID", {
+    day: "numeric", month: "long", year: "numeric"
+  });
+
   /* --- kode Holland --- */
   const codeHTML = top3.map(r =>
     `<span style="background:${TYPE_DATA[r.code].color}">${r.code}</span>`
@@ -536,12 +704,28 @@ function showResult() {
 
   /* --- render --- */
   el("resultCard").innerHTML = `
+    <div class="print-header">
+      <h2>LAPORAN ASESMEN MINAT &amp; BAKAT</h2>
+      <p>Layanan Bimbingan &amp; Konseling — Model RIASEC (Holland Codes)</p>
+    </div>
+
     <div class="result-head">
       <div class="eyebrow">Hasil Asesmen Minat &amp; Bakat</div>
+
+      <div class="result-student">
+        <div class="rs-avatar">${initial}</div>
+        <div class="rs-text">
+          <div class="rs-label">Nama Murid</div>
+          <div class="rs-name">${safeName}</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:#94a3b8;margin-top:6px">Tanggal asesmen: ${tanggal}</div>
+
       <div class="holland-code">${codeHTML}</div>
       <div class="result-title">Profil ${main.name} — ${main.tag}</div>
       <p class="result-sub">
-        Kode Holland kamu adalah <strong>${code}</strong>.
+        Kode Holland <strong>${safeName}</strong> adalah <strong>${code}</strong>.
         Artinya kekuatan terbesarmu ada pada dimensi <strong>${main.name}</strong>,
         didukung oleh <strong>${TYPE_DATA[top3[1].code].name}</strong>
         dan <strong>${TYPE_DATA[top3[2].code].name}</strong>.
@@ -575,7 +759,6 @@ function showResult() {
 
   showScreen("result");
 
-  /* animasi bar setelah render */
   requestAnimationFrame(() => {
     setTimeout(() => {
       document.querySelectorAll(".bar-fill").forEach(b => {
@@ -588,7 +771,13 @@ function showResult() {
 function restart() {
   state.index = 0;
   state.answers = new Array(TOTAL).fill(null);
+  state.studentName = "";
+  el("studentName").value = "";
+  el("studentName").classList.remove("error");
+  el("nameError").classList.remove("show");
+  el("studentBadge").classList.remove("show");
   showScreen("intro");
+  setTimeout(() => el("studentName").focus(), 400);
 }
 
 /* keyboard shortcut: tekan 1-5 untuk menjawab cepat */
